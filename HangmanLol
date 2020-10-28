@@ -1,0 +1,78 @@
+import random
+import sys
+
+
+wordList = [
+"tooba", "e", "idontcare", "word", "cheese", "salt", "tears", "coolbeans",
+ "schoolispain", "code", "bruh", "fourkeys", "sonic", "morshu", "tubamerch"
+           ]
+
+inputword = []
+hangmanword = random.choice(wordList) 
+wordlength = len(hangmanword)
+letterline = "abcdefghijklmnopqrstuvwxyz"
+lettersstored = []
+
+
+
+def start():
+    while True:
+        username = input("Please enter Your name ").strip()
+
+        if username == '':
+            print("At least put a letter in lol")
+        else:
+            break
+
+start()
+
+
+def change():
+
+    for character in hangmanword: 
+        inputword.append("-")
+
+    print("The word to guess has", wordlength, "letters")
+
+    print("You can only enter letters from A-Z")
+
+    print(inputword)
+
+
+
+def guessing():
+    attempts = 1
+
+    while attempts < 10:
+
+
+        guess = input("Pick a letter--").lower()
+
+        if not guess in letterline: 
+            print("Enter a letter from a-z alphabet")
+        elif guess in lettersstored: 
+            print("That letter has already been used. Try another.")
+        else: 
+
+            lettersstored.append(guess)
+            if guess in hangmanword:
+                print("That was the correct letter.")
+                for x in range(0, wordlength): 
+                    if hangmanword[x] == guess:
+                        inputword[x] = guess
+                        print(inputword)
+
+                if not '-' in inputword:
+                    print("You completed the word.")
+                    break
+            else:
+                print("Wrong letter")
+                attempts += 1
+                if attempts == 10:
+                    print(" You lost. The word was",         hangmanword)
+
+
+change()
+guessing()
+
+print("Finished")
